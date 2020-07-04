@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <meta content="text/html; charset=utf-8">
+    <script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/mdui.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="../css/mdui.css">
+    <link rel="stylesheet" href="../css/dracula.css">
+    <script src="../js/highlight.pack.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+    <style>
+        .mdui-typo pre {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: #282a36;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="mdui-typo mdui-container mdui-theme-primary-blue">
+    <h1 class="mdui-text-color-theme">星之小说下载器Kotlin版</h1>
+<p>基于星之小说下载器Java版重构的Kotlin版本</p>
+<p><a href="https://github.com/Stars-One/NovelDownloader-Kotlin" target="_blank">github地址</a></p>
+<p><strong>版本已更新到v1.1</strong></p>
+<h2 class="mdui-text-color-theme">使用说明</h2>
+<p>确保电脑有jdk8的环境，双击即可运行（win10系统)，win7则需要输入命令<code>java -jar d:\test\NovelDownloader.jar</code></p>
+<p>由于使用的第三方开源的原因，只有jdk8（java1.8）的环境才能运行程序</p>
+<p><strong>小说下载目录在jar同目录下的<code>星之小说下载器</code>目录下</strong></p>
+<p>目前只支持铅笔小说网,后续添加更多书源，还有安卓版，敬请期待。</p>
+<p>喜欢的话，不妨打赏一波！</p>
+<p>软件交流QQ群：<strong>690380139</strong></p>
+<p>断点下载暂未实现，小说下载途中，一定不要关闭软件，否则再次打开软件，之前的正在下载的任务会清空，只能重新下载。</p>
+<p><strong>这段请忽略</strong>	
+测试jar包代码：</p>
+<pre><code>java -Xdebug -Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=y -jar Q:\JavaProject\NovelDownloader\out\artifacts\NovelDownloader_jar\NovelDownloader.jar
+</code></pre>
+<h2 class="mdui-text-color-theme">预览</h2>
+<p><img src="https://img2018.cnblogs.com/blog/1210268/201912/1210268-20191222171424590-132491536.gif" alt="" /></p>
+<h2 class="mdui-text-color-theme">蓝奏云下载地址</h2>
+<p><a href="https://www.lanzous.com/b0cpux0bc" target="_blank">https://www.lanzous.com/b0cpux0bc</a></p>
+<h2 class="mdui-text-color-theme">功能实现</h2>
+<ul>
+<li><input type="checkbox" disabled="" checked=""> 单章节下载</li>
+<li><input type="checkbox" disabled="" checked=""> 支持铅笔小说网（已完成）</li>
+<li><input type="checkbox" disabled="" checked=""> 暂停/开始（已完成）</li>
+<li><input type="checkbox" disabled="" checked=""> 全部暂停和全部开始（已完成）</li>
+<li><input type="checkbox" disabled="" checked=""> 下载完成界面（已完成）</li>
+<li><input type="checkbox" disabled="" checked=""> 合并章节（已完成）</li>
+<li><input type="checkbox" disabled=""> 取消正在下载的任务</li>
+<li><input type="checkbox" disabled=""> 文件夹选择，设置下载链接</li>
+<li><input type="checkbox" disabled=""> 读取存在的历史任务</li>
+<li><input type="checkbox" disabled=""> 后台剪切板监听（似乎没有API）</li>
+<li><input type="checkbox" disabled=""> 读取已下载记录</li>
+<li><input type="checkbox" disabled=""> 删除下载任务</li>
+<li><input type="checkbox" disabled=""> 支持其他网站（笔趣阁..)后续添加</li>
+</ul>
+<h2 class="mdui-text-color-theme">支持书源</h2>
+<p><a href="https://www.x23qb.com/" target="_blank">铅笔小说网</a></p>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <meta content="text/html; charset=utf-8">
+    <script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/mdui.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="../css/mdui.css">
+    <link rel="stylesheet" href="../css/dracula.css">
+    <script src="../js/highlight.pack.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+    <style>
+        .mdui-typo pre {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: #282a36;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="mdui-typo mdui-container mdui-theme-primary-blue">
+    <h2 class="mdui-text-color-theme">前言</h2>
+<p>写了两年多的博客了，我想整理我的博客，问题是，得一个个打开，之后复制粘贴，嫌这样太麻烦，于是便找到了博客园的备份功能。</p>
+<p>但是这个备份功能下载下来的只是一个xml文件，我想把每一篇博文都转为一个md文件，于是便有了这个Java小工具。</p>
+<h2 class="mdui-text-color-theme">工具下载</h2>
+<p><a href="https://github.com/Stars-One/BlogBackupTool/releases/download/v4.0/BlogBackupTool4.0.zip" target="_blank">GitHub下载(似乎需要翻墙，不然下载速度很慢）</a></p>
+<p><strong><a href="https://files.cnblogs.com/files/kexing/BlogBackupTool4.0.zip" target="_blank">4.0版本下载</a></strong></p>
+<p><strong>修复了标签关键字不能带空格小bug</strong></p>
+<p><strong>新增加目录导航追加功能</strong></p>
+<p>界面预览:
+<img src="https://img2018.cnblogs.com/blog/1210268/201906/1210268-20190628124408823-1806723735.png" alt="" /></p>
+<h2 class="mdui-text-color-theme">使用说明</h2>
+<p>从博客园上下载备份的xml文件 将本项目下载，打开run.bat,输入前面下载的xml文件的地址，即会在xml文件的同目录生成一个博客园的文件夹，里面存放MD文件和Html文件
+<img src="https://img2018.cnblogs.com/blog/1210268/201901/1210268-20190118185531996-806451710.png" alt="" /></p>
+<h2 class="mdui-text-color-theme">程序讲解</h2>
+<h3 class="mdui-text-color-theme">涉及知识</h3>
+<ol>
+<li>IO流</li>
+<li>xml解析</li>
+</ol>
+<h3 class="mdui-text-color-theme">xml文件分析</h3>
+<p>从博客园下载的xml备份文件，格式大概是这样的</p>
+<pre><code>&lt;channel&gt;
+	&lt;title&gt;&lt;/title&gt;
+	&lt;link&gt;&lt;/link&gt;
+	&lt;description&lt;&lt;/description&gt;
+	&lt;language&gt;&lt;/language&gt;
+	&lt;lastBuildDate&gt;&lt;/lastBuildDate&gt;
+	&lt;pubDate&gt;&lt;/pubDate&gt;
+	&lt;ttl&gt;&lt;/ttl&gt;
+	&lt;item&gt;&lt;/item&gt;
+	&lt;item&gt;&lt;/item&gt;
+	...
+&lt;/channel&gt;
+</code></pre>
+<p>其中的<code>item</code>就是我们博客中每一篇博文</p>
+<p><code>item</code>结构</p>
+<pre><code>&lt;item&gt;
+	&lt;title&gt;&lt;/title&gt;
+	&lt;link&gt;&lt;/link&gt;
+	&lt;dc:creator&gt;&lt;/dc:creator&gt;
+	&lt;author&gt;&lt;/author&gt;
+	&lt;pubDate&gt;&lt;/pubDate&gt;
+	&lt;guid&gt;&lt;/guid&gt;
+	&lt;description&gt;&lt;/description&gt;
+&lt;item&gt;
+</code></pre>
+<p><code>item</code>结点之下还有子结点
+<code>title</code>是我们的博文标题</p>
+<p><code>link</code>则是我们博文对应的链接</p>
+<p><code>description</code>则是我们博客的内容</p>
+<pre><code>	NodeList itemLists = document.getElementsByTagName(&quot;item&quot;);//获得所有的item结点
+	for (int i = 0; i &lt; itemLists.getLength(); i++) {
+		NodeList list = itemLists.item(i).getChildNodes();//获得item结点之下的全部结点，有7个，下标从0开始
+		String title = list.item(0).getTextContent();//第一个结点内容是标题
+		String link = list.item(1).getTextContent();//第二个结点内容是链接
+		String description = list.item(6).getTextContent();
+		fileWrite(title,link,description);
+	}
+</code></pre>
+<p>PS：这里需要注意到是，<code>description</code>里面获取的内容我们查看的时候发现是下面这样的代码
+&lt;description&gt;&lt;![CDATA[测试。。]]&gt;&lt;/description&gt;</p>
+<p>这个<code>CDATA</code>其实是个<strong>xml的标准标签</strong>，表明这里面的内容都是文本（上面的也就是测试和句号才是内容，解析的时候会忽略掉两个中括号）</p>
+<h3 class="mdui-text-color-theme">区分md文件和html文件</h3>
+<p>如果是md文件，开头不可能出现<code>&lt;</code>这个符号，如果是html文件，因为要使用到各种标签，p,h,div等标签，肯定开头是有<code>&lt;</code>这个符号的</p>
+<h3 class="mdui-text-color-theme">html文件转md文件</h3>
+<p>如果想不想要html文件，想要md文件的话，就得手动去整理格式，可以先使用在线的工具将html文件转为md格式，这个百度一下就有工具了，不过还得慢慢整理一下，格式转换过来不一定符合排版，我们得手动地去排个版。</p>
+
+</body>
+</html>
